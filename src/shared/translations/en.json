@@ -428,8 +428,19 @@
 		"trade-card": {
 			"title": "Buy/Sell",
 			"reverse-button": "Reverse",
-			"sell-input-label": "Sell",
-			"buy-input-label": "Buy",
+			"trade-type-market": {
+				"sell-input-label": "Sell",
+				"buy-input-label": "Buy"
+			},
+			"trade-type-limit": {
+				"price-input-label": "Price",
+				"amount-input-label": "Amount"
+			},
+			"trade-type-stop-limit": {
+				"stop-input-label": "stop",
+				"limit-input-label": "Limit",
+				"amount-input-label": "Amount"
+			},
 			"confirm-trade-button": "Confirm trade",
 			"frozen-synth": "Synth is frozen",
 			"retry-button": "Retry",

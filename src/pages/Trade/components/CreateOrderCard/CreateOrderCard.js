@@ -7,7 +7,6 @@ import isEmpty from 'lodash/isEmpty';
 import snxJSConnector from 'utils/snxJSConnector';
 
 import Card from 'components/Card';
-import NumericInputWithCurrency from 'components/Input/NumericInputWithCurrency';
 
 import { getWalletInfo } from 'ducks/wallet/walletDetails';
 import { getSynthsWalletBalances } from 'ducks/wallet/walletBalances';
@@ -21,7 +20,6 @@ import {
 	getTransactions,
 } from 'ducks/transaction';
 
-import { EMPTY_VALUE } from 'constants/placeholder';
 import { BALANCE_FRACTIONS } from 'constants/order';
 import { SYNTHS_MAP, CATEGORY_MAP } from 'constants/currency';
 import { TRANSACTION_STATUS } from 'constants/transaction';
@@ -40,10 +38,15 @@ import {
 import { HeadingSmall, DataSmall } from 'components/Typography';
 import { ButtonFilter, ButtonPrimary } from 'components/Button';
 import DismissableMessage from 'components/DismissableMessage';
-import { FormInputRow, FormInputLabel, FormInputLabelSmall } from 'shared/commonStyles';
 
 import { ReactComponent as ReverseArrow } from 'assets/images/reverse-arrow.svg';
 import NetworkInfo from '../../../../components/NetworkInfo/NetworkInfo';
+import LimitTypeTradeInputs from '../LimitTypeTradeInputs';
+import StopLimitTypeTradeInputs from '../StopLimitTypeTradeInputs';
+import MarketTypeTradeInputs from '../MarketTypeTradeInputs';
+import TradeTypeTabs from '../TradeTypeTabs';
+import { MARKET, LIMIT, STOP_LIMIT } from 'constants/order';
+import { TRADE_TYPES } from 'constants/order';
 
 const INPUT_DEFAULT_VALUE = '';
 
@@ -75,6 +78,7 @@ const CreateOrderCard = ({
 	const [feeReclamationError, setFeeReclamationError] = useState(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [hasMarketClosed, setHasMarketClosed] = useState(false);
+	const [tradeType, setTradeType] = useState(MARKET);
 
 	const resetInputAmounts = () => {
 		setBaseAmount(INPUT_DEFAULT_VALUE);
@@ -291,6 +295,53 @@ const CreateOrderCard = ({
 		}
 	};
 
+	const handleTradeTypeChange = (event, newValue) => {
+		setTradeType(TRADE_TYPES[newValue]);
+	}
+
+	function commonProps() {
+		return {
+			quote: quote,
+			quoteAmount: quoteAmount,
+			isEmptyQuoteBalance: isEmptyQuoteBalance,
+			setMaxBalance: setMaxBalance,
+			quoteBalance: quoteBalance,
+			synthsWalletBalances: synthsWalletBalances,
+			setTradeAllBalance: setTradeAllBalance,
+			setQuoteAmount: setQuoteAmount,
+			setBaseAmount: setBaseAmount,
+			inputError: inputError,
+			base: base,
+			baseAmount: baseAmount,
+			baseBalance: baseBalance,
+			rate: rate,
+			inverseRate: inverseRate,
+			t: t,
+		};
+	  }
+
+	const getTradeInputs = () => {
+		switch(tradeType){
+			case MARKET:
+				return (
+					<MarketTypeTradeInputs
+						{...commonProps()}
+					/>);
+			case LIMIT:
+				return (
+					<LimitTypeTradeInputs
+						{...commonProps()}
+					/>);
+			case STOP_LIMIT:
+				return (
+					<StopLimitTypeTradeInputs
+						{...commonProps()}
+					/>);
+			default:
+				return (<div/>);
+		}
+	}
+
 	return (
 		<Card>
 			<Card.Header>
@@ -311,63 +362,10 @@ const CreateOrderCard = ({
 				</HeaderContainer>
 			</Card.Header>
 			<Card.Body>
-				<FormInputRow>
-					<NumericInputWithCurrency
-						currencyKey={quote.name}
-						value={`${quoteAmount}`}
-						label={
-							<>
-								<FormInputLabel>{t('trade.trade-card.sell-input-label')}:</FormInputLabel>
-								<StyledFormInputLabelSmall
-									isInteractive={!isEmptyQuoteBalance}
-									onClick={setMaxBalance}
-								>
-									{t('common.wallet.balance-currency', {
-										balance: quoteBalance
-											? formatCurrency(quoteBalance.balance)
-											: !isEmpty(synthsWalletBalances)
-											? 0
-											: EMPTY_VALUE,
-									})}
-								</StyledFormInputLabelSmall>
-							</>
-						}
-						onChange={(_, value) => {
-							setTradeAllBalance(false);
-							setBaseAmount(value * rate);
-							setQuoteAmount(value);
-						}}
-						errorMessage={inputError}
-					/>
-				</FormInputRow>
-				<FormInputRow>
-					<NumericInputWithCurrency
-						currencyKey={base.name}
-						value={`${baseAmount}`}
-						label={
-							<>
-								<FormInputLabel>{t('trade.trade-card.buy-input-label')}:</FormInputLabel>
-								<StyledFormInputLabelSmall
-									isInteractive={!isEmptyQuoteBalance}
-									onClick={setMaxBalance}
-								>
-									{t('common.wallet.balance-currency', {
-										balance: baseBalance
-											? formatCurrency(baseBalance.balance)
-											: !isEmpty(synthsWalletBalances)
-											? 0
-											: EMPTY_VALUE,
-									})}
-								</StyledFormInputLabelSmall>
-							</>
-						}
-						onChange={(_, value) => {
-							setTradeAllBalance(false);
-							setQuoteAmount(value * inverseRate);
-							setBaseAmount(value);
-						}}
-					/>
-				</FormInputRow>
+				<TradeTypeTabs value={tradeType} values={TRADE_TYPES} handleChange={handleTradeTypeChange}/>
+				<div style={{marginTop: '8px'}}>
+					{getTradeInputs()}
+				</div>
 				<BalanceFractionRow>
 					{BALANCE_FRACTIONS.map((fraction, id) => (
 						<ButtonAmount
@@ -452,10 +450,6 @@ const ButtonAmount = styled.button`
 	border: none;
 	background-color: ${(props) => props.theme.colors.accentL2};
 	height: 24px;
-`;
-
-const StyledFormInputLabelSmall = styled(FormInputLabelSmall)`
-	cursor: ${(props) => (props.isInteractive ? 'pointer' : 'default')};
 `;
 
 const HeaderContainer = styled.div`
