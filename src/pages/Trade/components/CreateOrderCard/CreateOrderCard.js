@@ -20,7 +20,7 @@ import {
 	getTransactions,
 } from 'ducks/transaction';
 
-import { BALANCE_FRACTIONS } from 'constants/order';
+import { BALANCE_FRACTIONS, BUY } from 'constants/order';
 import { SYNTHS_MAP, CATEGORY_MAP } from 'constants/currency';
 import { TRANSACTION_STATUS } from 'constants/transaction';
 
@@ -41,12 +41,15 @@ import DismissableMessage from 'components/DismissableMessage';
 
 import { ReactComponent as ReverseArrow } from 'assets/images/reverse-arrow.svg';
 import NetworkInfo from '../../../../components/NetworkInfo/NetworkInfo';
-import LimitTypeTradeInputs from '../LimitTypeTradeInputs';
-import StopLimitTypeTradeInputs from '../StopLimitTypeTradeInputs';
-import MarketTypeTradeInputs from '../MarketTypeTradeInputs';
+import LimitTypeTradeInputs from '../LimitTrade/LimitTypeTradeInputs';
+import StopLimitTypeTradeInputs from '../StopLimitTrade/StopLimitTypeTradeInputs';
+import MarketTypeTradeInputs from '../MarketTrade/MarketTypeTradeInputs';
 import TradeTypeTabs from '../TradeTypeTabs';
 import { MARKET, LIMIT, STOP_LIMIT } from 'constants/order';
 import { TRADE_TYPES } from 'constants/order';
+import MarketTypeTradeHeader from '../MarketTrade/MarketTypeTradeHeader';
+import LimitTypeTradeHeader from '../LimitTrade/LimitTypeTradeHeader';
+import StopLimitTypeTradeHeader from '../StopLimitTrade/StopLimitTypeTradeHeader';
 
 const INPUT_DEFAULT_VALUE = '';
 
@@ -79,6 +82,10 @@ const CreateOrderCard = ({
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [hasMarketClosed, setHasMarketClosed] = useState(false);
 	const [tradeType, setTradeType] = useState(MARKET);
+	const [limitPrice, setLimitPrice] = useState(INPUT_DEFAULT_VALUE);
+	const [stopLimit, setStopLimit] = useState(INPUT_DEFAULT_VALUE);
+	const [limitAmount, setLimitAmount] = useState(INPUT_DEFAULT_VALUE);
+	const [transactionType, setTransactionType] = useState(BUY);
 
 	const resetInputAmounts = () => {
 		setBaseAmount(INPUT_DEFAULT_VALUE);
@@ -318,7 +325,40 @@ const CreateOrderCard = ({
 			inverseRate: inverseRate,
 			t: t,
 		};
-	  }
+	}
+
+	const handleTransactionTypeChange = (transaction) => {
+		console.log(transaction)
+		setTransactionType(transaction);
+	}
+
+	const getTradeHeader = () => {
+		switch(tradeType){
+			case MARKET:
+				return (
+					<MarketTypeTradeHeader
+						setPair={setPair}
+						resetInputAmounts={resetInputAmounts}
+						t={t}
+						base={base}
+						quote={quote}
+					/>);
+			case LIMIT:
+				return (
+					<LimitTypeTradeHeader
+						transactionType={transactionType}
+						handleTransactionTypeChange={handleTransactionTypeChange}
+					/>);
+			case STOP_LIMIT:
+				return (
+					<StopLimitTypeTradeHeader
+						transactionType={transactionType}
+						handleTransactionTypeChange={handleTransactionTypeChange}
+					/>);
+			default:
+				return (<div/>);
+		}
+	}
 
 	const getTradeInputs = () => {
 		switch(tradeType){
@@ -326,16 +366,27 @@ const CreateOrderCard = ({
 				return (
 					<MarketTypeTradeInputs
 						{...commonProps()}
+						
 					/>);
 			case LIMIT:
 				return (
 					<LimitTypeTradeInputs
 						{...commonProps()}
+						limitPrice={limitPrice}
+						handleLimitChange={setLimitPrice}
+						limitAmount={limitAmount}
+						handleAmountChange={setLimitAmount}
 					/>);
 			case STOP_LIMIT:
 				return (
 					<StopLimitTypeTradeInputs
 						{...commonProps()}
+						limitPrice={limitPrice}
+						handleLimitChange={setLimitPrice}
+						limitAmount={limitAmount}
+						handleAmountChange={setLimitAmount}
+						stopLimit={stopLimit}
+						handleStopLimit={setStopLimit}
 					/>);
 			default:
 				return (<div/>);
@@ -346,24 +397,16 @@ const CreateOrderCard = ({
 		<Card>
 			<Card.Header>
 				<HeaderContainer>
-					<HeadingSmall>{t('trade.trade-card.title')}</HeadingSmall>
-					<ButtonFilter
-						onClick={() => {
-							setPair({ quote: base, base: quote });
-							resetInputAmounts();
-						}}
-						height={'22px'}
-					>
-						<ButtonFilterInner>
-							{t('trade.trade-card.reverse-button')}
-							<ReverseArrowStyled />
-						</ButtonFilterInner>
-					</ButtonFilter>
+					<TabsContainer>
+					<TradeTypeTabs value={tradeType} values={TRADE_TYPES} handleChange={handleTradeTypeChange}/>
+					</TabsContainer>
 				</HeaderContainer>
 			</Card.Header>
 			<Card.Body>
-				<TradeTypeTabs value={tradeType} values={TRADE_TYPES} handleChange={handleTradeTypeChange}/>
-				<div style={{marginTop: '8px'}}>
+				<div>
+					{getTradeHeader()}
+				</div>
+				<div style={{marginTop: '12px'}}>
 					{getTradeInputs()}
 				</div>
 				<BalanceFractionRow>
@@ -389,8 +432,8 @@ const CreateOrderCard = ({
 					gasLimit={gasLimit}
 					ethRate={ethRate}
 					exchangeFeeRate={feeRate}
-					amount={baseAmount}
-					usdRate={getExchangeRatesForCurrencies(exchangeRates, base.name, SYNTHS_MAP.sUSD)}
+					amount={tradeType === MARKET ? baseAmount : limitAmount}
+					usdRate={tradeType === MARKET ? getExchangeRatesForCurrencies(exchangeRates, base.name, SYNTHS_MAP.sUSD) : limitPrice}
 				/>
 
 				{hasMarketClosed ? (
@@ -459,14 +502,8 @@ const HeaderContainer = styled.div`
 	align-items: center;
 `;
 
-const ButtonFilterInner = styled.div`
-	display: flex;
-	align-items: center;
-`;
-
-const ReverseArrowStyled = styled(ReverseArrow)`
-	height: 10px;
-	margin-left: 8px;
+const TabsContainer = styled.div`
+	margin-bottom: 7px;
 `;
 
 export const TxErrorMessage = styled(DismissableMessage)`

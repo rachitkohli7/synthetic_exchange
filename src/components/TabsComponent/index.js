@@ -4,57 +4,36 @@ import { makeStyles, withStyles, createStyles } from '@material-ui/core/styles';
 
 const AntTabs = withStyles({
   root: {
-    borderBottom: '1px solid #e8e8e8',
+    borderBottom: 'transparent',
   },
   indicator: {
-    backgroundColor: '#1890ff',
+    backgroundColor: '#947BFF',
   },
 })(Tabs);
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  padding: {
-    padding: theme.spacing(3),
-  },
   demo1: {
     backgroundColor: theme.palette.background.paper,
-  },
-  demo2: {
-    backgroundColor: '#2e1534',
   },
 }));
 
 const AntTab = withStyles((theme) =>
   createStyles({
     root: {
-      textTransform: 'none',
-      minWidth: 72,
+      textTransform: 'upperCase',
+      minWidth: 40,
+      paddingBottom: 0,
       fontWeight: theme.typography.fontWeightRegular,
-      marginRight: theme.spacing(4),
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
       '&:hover': {
-        color: '#40a9ff',
+        color: '#947BFF',
         opacity: 1,
       },
       '&$selected': {
-        color: '#1890ff',
+        color: '#947BFF',
         fontWeight: theme.typography.fontWeightMedium,
       },
       '&:focus': {
-        color: '#40a9ff',
+        color: '#947BFF',
       },
     },
     selected: {},
@@ -64,9 +43,9 @@ const AntTab = withStyles((theme) =>
 export const TabsComponent = (props) => {
   const classes = useStyles();
   return (
-    <div className={classes.demo1}>
+    <div >
         <AntTabs value={props.values.indexOf(props.value)}
-          onChange={props.handleChange} aria-label="ant example">
+          onChange={props.handleChange} aria-label="Trade type tabs">
           <AntTab key={props.values[0]} label={props.values[0]} />
           <AntTab key={props.values[1]} label={props.values[1]} />
           <AntTab key={props.values[2]} label={props.values[2]} />

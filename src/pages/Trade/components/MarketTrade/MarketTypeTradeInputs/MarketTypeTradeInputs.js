@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 import { EMPTY_VALUE } from 'constants/placeholder';
 import NumericInputWithCurrency from 'components/Input/NumericInputWithCurrency';
 import { FormInputRow, FormInputLabel, FormInputLabelSmall } from 'shared/commonStyles';
-import { StyledFormInputLabelSmall } from '../Common/common';
+import { StyledFormInputLabelSmall } from '../../Common/common';
 
 const MarketTypeTradeInputs = (props) => {
     return (

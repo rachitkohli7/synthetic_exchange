@@ -441,7 +441,7 @@
 				"limit-input-label": "Limit",
 				"amount-input-label": "Amount"
 			},
-			"confirm-trade-button": "Confirm trade",
+			"confirm-trade-button": "Place Order",
 			"frozen-synth": "Synth is frozen",
 			"retry-button": "Retry",
 			"network-info": {
