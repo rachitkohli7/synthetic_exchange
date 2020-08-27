@@ -2,9 +2,9 @@ import history from '../utils/history';
 import { CurrencyKey } from './currency';
 
 export const ROUTES = {
-	Home: '/',
-	Trade: '/trade',
-	TradeMatch: '/trade/:baseCurrencyKey-:quoteCurrencyKey',
+	Home: '/home',
+	Trade: '/',
+	TradeMatch: '/:baseCurrencyKey-:quoteCurrencyKey',
 	Loans: '/loans',
 	Assets: {
 		Home: '/assets',
@@ -35,8 +35,9 @@ export const buildSynthOverviewLink = (currencyKey: CurrencyKey) =>
 	`${ROUTES.Synths.Home}/${currencyKey}`;
 
 export const buildTradeLink = (baseCurrencyKey: CurrencyKey, quoteCurrencyKey: CurrencyKey) =>
-	`${ROUTES.Trade}/${baseCurrencyKey}-${quoteCurrencyKey}`;
-
+	//`${ROUTES.Trade}/${baseCurrencyKey}-${quoteCurrencyKey}`;
+	`/${baseCurrencyKey}-${quoteCurrencyKey}`;
+// The above change is made to accommodate the routing related changes.
 export const navigateTo = (
 	path: string,
 	replacePath: boolean = false,

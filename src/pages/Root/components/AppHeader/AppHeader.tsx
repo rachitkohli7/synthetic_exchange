@@ -58,7 +58,7 @@ export const AppHeader: FC<AppHeaderProps> = (props) => {
 							<Logo />
 						</StyledLogoLink>
 					</MenuItem>
-					{MENU_LINKS.map(({ i18nLabel, link, isBeta }) => (
+					{/*MENU_LINKS.map(({ i18nLabel, link, isBeta }) => (
 						<MenuLinkItem key={link}>
 							<MenuLink to={link}>
 								{t(i18nLabel)} {isBeta && <BetaLabel>{t('common.beta')}</BetaLabel>}
@@ -70,7 +70,7 @@ export const AppHeader: FC<AppHeaderProps> = (props) => {
 							<MenuLinkItem key={link}>
 								<MenuLink to={link}>{t(i18nLabel)}</MenuLink>
 							</MenuLinkItem>
-						))}
+						))}*/}
 				</MenuItemsLeft>
 				<MenuItemsRight>
 					<MenuItem>

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const MarketTypeTradeHeader = (props) => {
     return (<HeaderContainer>
-        <headingH4CSS>{props.t('trade.trade-card.title')}</headingH4CSS>
+        {props.t('trade.trade-card.title')}
         <ButtonFilter
             onClick={() => {
                 props.setPair({ quote: props.base, base: props.quote });
