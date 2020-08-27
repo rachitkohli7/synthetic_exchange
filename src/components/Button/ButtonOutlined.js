@@ -24,7 +24,7 @@ const ButtonOutlined = styled.button`
 	font-size: 16px;
 	letter-spacing: 0.2px;
 	font-family: ${(props) => props.theme.fonts.medium};
-	color: ${(props) => props.theme.colors.white};
+	color: ${(props) => props.activeOn ? props.theme.colors.white : props.theme.isDarkTheme ? props.theme.colors.white : props.theme.colors.black};
 	cursor: pointer;
 	padding: 0 6px;
 	background-color: transparent;
