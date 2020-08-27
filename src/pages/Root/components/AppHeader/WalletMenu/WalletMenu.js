@@ -82,7 +82,7 @@ const WalletMenu = ({
 					</CardData>
 				</Card.Body>
 			</Card>
-			<Card>
+			{/* <Card>
 				<StyledCardHeader>
 					<StyledHeadingSmall>{t('header.wallet-menu.cards.synth-balance')}</StyledHeadingSmall>
 				</StyledCardHeader>
@@ -137,11 +137,11 @@ const WalletMenu = ({
 						]}
 					></StyledTable>
 				</StyleCardBody>
-			</Card>
+			</Card> */}
 			<Bottom>
-				<Link to={ROUTES.Assets.Home}>
+				{/* <Link to={ROUTES.Assets.Home}>
 					<StyledButton>{t('header.wallet-menu.buttons.wallet-overview')}</StyledButton>
-				</Link>
+				</Link> */}
 				<StyledButton onClick={logout}>{t('header.wallet-menu.buttons.log-out')}</StyledButton>
 			</Bottom>
 		</Content>

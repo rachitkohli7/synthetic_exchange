@@ -76,11 +76,11 @@ export const AppHeader: FC<AppHeaderProps> = (props) => {
 					<MenuItem>
 						<SupportLink isOnSplashPage={isOnSplashPage} />
 					</MenuItem>
-					{showThemeToggle && (
+					{/*showThemeToggle && (
 						<MenuItem>
 							<ThemeToggle />
 						</MenuItem>
-					)}
+					)*/}
 					<MenuItem>
 						<UserInfo isOnSplashPage={isOnSplashPage} />
 					</MenuItem>

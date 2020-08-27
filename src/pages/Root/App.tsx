@@ -44,8 +44,9 @@ type AppProps = PropsFromRedux & {
 };
 
 const App: FC<AppProps> = ({ isAppReady, currentTheme, isSystemSuspended }) => {
-	const themeStyle = isDarkTheme(currentTheme) ? darkTheme : lightTheme;
-
+	//const themeStyle = isDarkTheme(currentTheme) ? darkTheme : lightTheme;
+	const themeStyle = darkTheme;
+	
 	return (
 		<ThemeProvider theme={themeStyle}>
 			<MaterialUIThemeProvider>
