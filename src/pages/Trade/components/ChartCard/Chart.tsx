@@ -6,6 +6,7 @@ import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 import isNumber from 'lodash/isNumber';
 import find from 'lodash/find';
+import {default as colors} from 'styles/theme/colors';
 
 import RechartsResponsiveContainer from 'components/RechartsResponsiveContainer';
 
@@ -238,7 +239,7 @@ const ChartContainer = styled.div`
 	height: 250px;
 	display: flex;
 	justify-content: center;
-	background-color: rgb(72,61,139, 0.2);
+	background-color: ${colors.chartBackground};
 	align-items: center;
 	.recharts-yAxis .yAxis,
 	.recharts-xAxis .xAxis {

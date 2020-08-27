@@ -3,7 +3,7 @@ import get from 'lodash/get';
 
 import snxJSConnector from '../utils/snxJSConnector';
 import { bigNumberFormatter, parseBytes32String } from '../utils/formatters';
-import { SYNTHS_MAP, CurrencyKey } from '../constants/currency';
+import { SYNTHS_MAP, CurrencyKey, SYNTHS_DISPLAY_NAMES } from '../constants/currency';
 import { RootState } from './types';
 import { takeLatest, put } from 'redux-saga/effects';
 
@@ -83,17 +83,30 @@ function* fetchRates() {
 
 	try {
 		let exchangeRates: Rates = {};
-
+		
+		//const marketPrice = yield getMarketPrice();
 		const [synths, rates] = yield synthSummaryUtilContract.synthsRates();
 		synths.forEach((synth: CurrencyKey, idx: number) => {
 			const synthName = parseBytes32String(synth);
+			//const coinName = SYNTHS_DISPLAY_NAMES[synthName].toLowerCase();
+			/* if (false && marketPrice[coinName]) {
+				exchangeRates[synthName] = 1 / marketPrice[coinName];
+			} else { */
 			exchangeRates[synthName] = bigNumberFormatter(rates[idx]);
+			//}
 		});
 
 		yield put(fetchRatesSuccess({ exchangeRates }));
 	} catch (e) {
 		yield put(fetchRatesFailure({ error: e.message }));
 	}
+}
+
+async function getMarketPrice(): Promise<any> {
+	const res = await fetch("https://api.coingecko.com/api/v3/coins/universal-us-dollar");
+	const result = await res.json();
+	const priceList = result.market_data.current_price;
+	return priceList;
 }
 
 export function* watchFetchRatesRequest() {

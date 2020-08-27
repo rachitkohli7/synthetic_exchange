@@ -1,13 +1,14 @@
 import React from "react";
 import { Tab, Tabs } from "@material-ui/core";
 import { makeStyles, withStyles, createStyles } from '@material-ui/core/styles';
+import {default as colors} from 'styles/theme/colors';
 
 const AntTabs = withStyles({
   root: {
     borderBottom: 'transparent',
   },
   indicator: {
-    backgroundColor: '#947BFF',
+    backgroundColor: colors.buttonDefault,
   },
 })(Tabs);
 
@@ -25,15 +26,15 @@ const AntTab = withStyles((theme) =>
       paddingBottom: 0,
       fontWeight: theme.typography.fontWeightRegular,
       '&:hover': {
-        color: '#947BFF',
+        color: colors.buttonHover,
         opacity: 1,
       },
       '&$selected': {
-        color: '#947BFF',
+        color: colors.buttonDefault,
         fontWeight: theme.typography.fontWeightMedium,
       },
       '&:focus': {
-        color: '#947BFF',
+        color: colors.buttonDefault,
       },
     },
     selected: {},
