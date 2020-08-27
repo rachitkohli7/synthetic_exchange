@@ -238,6 +238,7 @@ const ChartContainer = styled.div`
 	height: 250px;
 	display: flex;
 	justify-content: center;
+	background-color: rgb(72,61,139, 0.2);
 	align-items: center;
 	.recharts-yAxis .yAxis,
 	.recharts-xAxis .xAxis {
