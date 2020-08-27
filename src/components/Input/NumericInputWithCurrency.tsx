@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { SYNTHS_MAP, CurrencyKey } from 'constants/currency';
+import { SYNTHS_MAP, CurrencyKey, SYNTHS_DISPLAY_NAMES } from 'constants/currency';
 
 import { FlexDivCentered, Message } from 'shared/commonStyles';
 
@@ -44,7 +44,7 @@ const TradeInput: FC<NumericInputWithCurrencyProps> = ({
 			{label != null && <Label>{label}</Label>}
 			<Container className={className}>
 				<CurrencyContainer className="currency-container">
-					<StyledCurrencyName currencyKey={currencyKey} showIcon={showIcon} />
+					<StyledCurrencyName name={SYNTHS_DISPLAY_NAMES[currencyKey]} currencyKey={currencyKey} showIcon={showIcon} />
 				</CurrencyContainer>
 				<StyledNumericInput
 					className="input"

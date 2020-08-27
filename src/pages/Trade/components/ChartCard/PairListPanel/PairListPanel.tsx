@@ -140,7 +140,9 @@ const PairListPanel: FC<PairListPanelProps> = ({
 				<DropdownPanelHeader>
 					<Currency.Pair
 						baseCurrencyKey={base.name}
+						baseCurrencyAsset={base.asset}
 						quoteCurrencyKey={quote.name}
+						quoteCurrencyAsset={quote.asset}
 						showIcon={true}
 					/>
 					<MenuArrowDownIcon className="arrow" />

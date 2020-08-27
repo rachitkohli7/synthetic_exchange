@@ -19,6 +19,7 @@ import { getSynthsCategoryFilter } from './ui';
 
 export type SynthDefinition = {
 	name: CurrencyKey;
+	displayName: string;
 	asset: string;
 	category: Category;
 	sign: string;

@@ -15,6 +15,7 @@ import { SynthDefinitionMap } from 'ducks/synths';
 
 import { SnowflakeCircle } from 'components/Icons';
 import Margin from 'components/Margin';
+import { SYNTHS_DISPLAY_NAMES } from 'constants/currency';
 
 type StateProps = {
 	synthsMap: SynthDefinitionMap;
@@ -43,7 +44,9 @@ const MarketsTable: FC<MarketsTableProps> = memo(({ synthsMap, markets, onTableR
 						<>
 							<Currency.Pair
 								baseCurrencyKey={cellProps.row.original.baseCurrencyKey}
+								baseCurrencyAsset={SYNTHS_DISPLAY_NAMES[cellProps.row.original.baseCurrencyKey]}
 								quoteCurrencyKey={cellProps.row.original.quoteCurrencyKey}
+								quoteCurrencyAsset={SYNTHS_DISPLAY_NAMES[cellProps.row.original.quoteCurrencyKey]}
 								showIcon={true}
 							/>
 							{synthsMap[cellProps.row.original.baseCurrencyKey]?.isFrozen ? (

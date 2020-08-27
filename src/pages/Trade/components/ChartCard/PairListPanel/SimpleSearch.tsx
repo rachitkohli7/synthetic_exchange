@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { SYNTHS_MAP, CurrencyKey, CurrencyKeys, CRYPTO_CURRENCY_MAP } from 'constants/currency';
+import { SYNTHS_MAP, CurrencyKey, CurrencyKeys, CryptoKey, CryptoKeys, CRYPTO_CURRENCY_MAP, CRYPTO_MAP, SYNTHS_DISPLAY_NAMES } from 'constants/currency';
 
 import { ReactComponent as CogIcon } from 'assets/images/cog.svg';
 
@@ -38,8 +38,8 @@ const SimpleSearch: FC<SimpleSearchProps> = ({
 				value={search}
 				onChange={onSearchChange}
 				placeholder={t('common.currency.try-currencyA-currencyB-or-currencyC-currencyD', {
-					currencyA: SYNTHS_MAP.sETH,
-					currencyB: SYNTHS_MAP.iBTC,
+					currencyA: CRYPTO_MAP.ETH,
+					currencyB: CRYPTO_MAP.BTC,
 					currencyC: CRYPTO_CURRENCY_MAP.LINK,
 					currencyD: CRYPTO_CURRENCY_MAP.ETH,
 				})}
@@ -51,7 +51,7 @@ const SimpleSearch: FC<SimpleSearchProps> = ({
 						isActive={asset === marketsAssetFilter}
 						onClick={(e) => onAssetFilterClick(e, asset)}
 					>
-						{asset}
+						{SYNTHS_DISPLAY_NAMES[asset]}
 					</StyledButton>
 				))}
 				<IconButton onClick={onAdvancedSearchClick}>

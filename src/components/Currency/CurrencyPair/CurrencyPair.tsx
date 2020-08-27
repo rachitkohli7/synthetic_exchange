@@ -11,6 +11,7 @@ type CurrencyPairProps = {
 	baseCurrencyKey: CurrencyKey;
 	baseCurrencyAsset?: string;
 	quoteCurrencyKey: CurrencyKey;
+	quoteCurrencyAsset?: string;
 	showIcon?: boolean;
 	iconProps?: any;
 };
@@ -19,13 +20,15 @@ export const CurrencyPair: FC<CurrencyPairProps> = ({
 	baseCurrencyKey,
 	baseCurrencyAsset,
 	quoteCurrencyKey,
+	quoteCurrencyAsset,
 	showIcon = true,
 	iconProps = {},
 	...rest
 }) => (
 	<Container showIcon={showIcon} {...rest}>
 		{showIcon && <CurrencyIcon currencyKey={baseCurrencyKey} {...iconProps} />}
-		{formatCurrencyPair(baseCurrencyAsset || baseCurrencyKey, quoteCurrencyKey)}
+		{/*formatCurrencyPair(baseCurrencyAsset || baseCurrencyKey, quoteCurrencyKey)*/}
+		{formatCurrencyPair(baseCurrencyAsset || baseCurrencyKey, quoteCurrencyAsset || quoteCurrencyKey)}
 	</Container>
 );
 

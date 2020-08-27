@@ -91,6 +91,8 @@ import { ReactComponent as sCHFIcon } from '@synthetixio/assets/synths/sCHF.svg'
 
 export type CurrencyKey = string;
 export type CurrencyKeys = string[];
+export type CryptoKey = string;
+export type CryptoKeys = string[];
 
 // TODO: standardize this
 export type Category = 'crypto' | 'forex' | 'equities' | 'index' | 'commodity' | 'inverse';
@@ -151,6 +153,51 @@ export const SYNTHS = [
 	'iDEFI',
 ];
 
+export const SYNTHS_DISPLAY_NAMES: {[key: string]: CryptoKey} = {
+	'sBTC': 'BTC',
+	'sETH': 'ETH',
+	'sXRP': 'XRP',
+	'sBCH': 'BCH',
+	'sLTC': 'LTC',
+	'sEOS': 'EOS',
+	'sBNB': 'BNB',
+	'sXTZ': 'XTZ',
+	'sXMR': 'XMR',
+	'sADA': 'ADA',
+	'sLINK': 'LINK',
+	'sTRX': 'TRX',
+	'sDASH': 'DASH',
+	'sETC': 'ETC',
+	'iBTC': 'BTC',
+	'iETH': 'ETH',
+	'iXRP': 'XRP',
+	'iBCH': 'BCH',
+	'iLTC': 'LTC',
+	'iEOS': 'EOS',
+	'iBNB': 'BNB',
+	'iXTZ': 'XTZ',
+	'iXMR': 'XMR',
+	'iADA': 'ADA',
+	'iLINK': 'LINK',
+	'iTRX': 'TRX',
+	'iDASH': 'DASH',
+	'iETC': 'ETC',
+	'sFTSE': 'FTSE',
+	'sNIKKEI': 'NIKKEI',
+	'sXAU': 'XAU',
+	'sXAG': 'XAG',
+	'sEUR': 'EUR',
+	'sJPY': 'JPY',
+	'sUSD': 'USD',
+	'sAUD': 'AUD',
+	'sGBP': 'GBP',
+	'sCHF': 'CHF',
+	'sCEX': 'CEX',
+	'sDEFI': 'DEFI',
+	'iCEX': 'CEX',
+	'iDEFI': 'DEFI',
+};
+
 export const SYNTHS_MAP = keyBy(SYNTHS);
 
 export const CRYPTO_CURRENCY = [
@@ -174,6 +221,8 @@ export const CRYPTO_CURRENCY = [
 	'DASH',
 	'ETC',
 ];
+
+export const CRYPTO_MAP = keyBy(CRYPTO_CURRENCY);
 
 export const CRYPTO_CURRENCY_MAP = keyBy(CRYPTO_CURRENCY);
 
