@@ -70,16 +70,16 @@ export const MobileAppHeader: FC<MobileAppHeaderProps> = ({
 						<MenuItem>
 							<UserInfo isOnSplashPage={isOnSplashPage} />
 						</MenuItem>
-						<MenuItem>
+						{/* <MenuItem>
 							<MenuToggleButton onClick={toggleMenu}>
 								{menuOpen ? <MenuCloseIcon /> : <MenuHamburgerIcon />}
 							</MenuToggleButton>
-						</MenuItem>
+						</MenuItem> */}
 					</MenuItemsRight>
 				</Content>
 			</Container>
-			<MenuPusher />
-			{menuOpen && (
+			{/*<MenuPusher />
+			 {menuOpen && (
 				<>
 					<Overlay onClick={toggleMenu} />
 					<StyledDropdown isOnSplashPage={isOnSplashPage}>
@@ -110,7 +110,7 @@ export const MobileAppHeader: FC<MobileAppHeaderProps> = ({
 						)}
 					</StyledDropdown>
 				</>
-			)}
+			)} */}
 		</>
 	);
 };
